@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1556073378 source:e:\tugas c++\tubes-isales\isales\isales.cpp
+1556201594 source:e:\tugas c++\tubes-isales\isales\isales.cpp
+	"kategori.h"
 
-1556073176 source:e:\tugas c++\tubes-isales\isales\main.cpp
-	<iostream>
+1556201961 source:e:\tugas c++\tubes-isales\isales\main.cpp
+	"kategori.h"
 
 1556078487 source:e:\coding\github\tubes-isales\isales\isales.cpp
 	"iSales.h"
@@ -11,5 +12,12 @@
 	<iostream>
 
 1556078573 e:\coding\github\tubes-isales\isales\isales.h
+	<iostream>
+
+1556203344 e:\tugas c++\tubes-isales\isales\kategori.h
+	"barang.h"
+	<iostream>
+
+1556203927 e:\tugas c++\tubes-isales\isales\barang.h
 	<iostream>
 
