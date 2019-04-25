@@ -32,8 +32,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="barang.h" />
 		<Unit filename="iSales.cpp" />
-		<Unit filename="iSales.h" />
+		<Unit filename="kategori.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
