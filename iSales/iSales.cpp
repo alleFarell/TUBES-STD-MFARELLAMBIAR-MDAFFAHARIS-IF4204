@@ -5,11 +5,6 @@ void createList(List &L){
     Last(L) = NULL;
 }
 
-void createList(ListBrg &L2){
-    First(L2) = NULL;
-    Last(L2) = NULL;
-}
-
 bool isEmpty(List L){
     if(First(L)==NULL){
         return true;
@@ -24,8 +19,17 @@ adrKategori allocationKat(infotypeK kategori){
     infoK(P) = kategori;
     nextK(P) = NULL;
     prevK(P) = NULL;
-    ListBrg L2;
-    createList(L2);
+    pointerBrg(P) = NULL;
+    return P;
+}
+adrBarang allocationBrg(infotypeB barang){
+    adrBarang P = new elmlistBarang;
+    infoB(P).ID = barang.ID;
+    infoB(P).nama = barang.nama;
+    infoB(P).harga = barang.harga;
+    nextB(P) = NULL;
+    prevB(P) = NULL;
+    return P;
 }
 void insertFirst(List &L, adrKategori P){
     if (First(L) != NULL){
@@ -80,22 +84,60 @@ void printParent(List L){
     }
 };
 
+void printAll(List L){
+    adrKategori P = First(L);
+    adrBarang Q;
+    while(P!= NULL){
+        cout<<"parent: "<<infoK(P)<<endl;
+        Q = pointerBrg(P);
+        while(Q!= NULL){
+            cout<<infoB(Q).ID<<" - "<<infoB(Q).nama<<" - "<<infoB(Q).harga<<endl;
+            Q = nextB(Q);
+        }
+        P = nextK(P);
+        cout<<endl;
+    }
+}
+
+
 adrKategori searchParent(List L, infotypeK kategori){
     adrKategori P = First(L);
-    do{
+    while(P != NULL){
         if(infoK(P)== kategori){
             return P;
         } else{
             P= nextK(P);
         }
 
-    } while(P != Last(L));
+    };
     return NULL;
 }
 
 void insertBarang(List &L, infotypeK kategori, infotypeB barang){
     adrKategori P = searchParent(L,kategori);
-    if (P!=NULL){
-
+    if (P!= NULL){
+        adrBarang R = allocationBrg(barang);
+        if(pointerBrg(P)!=NULL){
+            adrBarang Q = pointerBrg(P);
+            while (nextB(Q)!=NULL){
+                Q = nextB(Q);
+            }
+            nextB(Q)= R;
+            prevB(R)= Q;
+       } else {
+            pointerBrg(P)= R;
+       }
     }
 }
+adrBarang searchChild(adrBarang P,string nama){
+   while(P != NULL){
+        if(infoB(P).nama== nama){
+            return P;
+        } else{
+            P= nextB(P);
+        }
+
+    };
+    return NULL;
+}
+

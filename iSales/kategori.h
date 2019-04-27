@@ -18,7 +18,7 @@ struct elmlistKategori{
     infotypeK infoK;
     adrKategori nextK;
     adrKategori prevK;
-    ListBrg L2;
+    adrBarang pointerBrg;
 };
 struct List{
     adrKategori First;
@@ -33,6 +33,9 @@ void insertLast(List &L, adrKategori P);
 void deleteFirst(List &L, adrKategori &P);
 void deleteLast(List &L, adrKategori &P);
 adrKategori searchParent(List L, infotypeK kategori);
-
+adrBarang allocationBrg(infotypeB barang);
+void insertBarang(List &L, infotypeK kategori, infotypeB barang);
+void printAll(List L);
+adrBarang searchChild(adrBarang P,string nama);
 
 #endif // KATEGORI_H_INCLUDED
