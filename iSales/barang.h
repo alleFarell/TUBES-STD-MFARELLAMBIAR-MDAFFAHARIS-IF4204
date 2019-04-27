@@ -7,6 +7,7 @@
 #define infoB(P) P->infoB
 #define FirstBrg(L) L.FirstBrg
 #define LastBrg(L) L.LastBrg
+#define pointerBrg(P) P->pointerBrg
 
 #include <iostream>
 using namespace std;
@@ -24,10 +25,6 @@ struct elmlistBarang {
     infotypeB infoB;
     adrBarang nextB;
     adrBarang prevB;
-};
-struct ListBrg{
-    adrBarang First;
-    adrBarang Last;
 };
 
 
