@@ -2,7 +2,6 @@
 #define KATEGORI_H_INCLUDED
 #include "barang.h"
 #include <stdlib.h>
-
 #include <iostream>
 using namespace std;
 
@@ -48,4 +47,12 @@ void insertAfterChild(adrKategori P, adrBarang Prec, infotypeB barang);
 void printIDOnly(List L);
 adrBarang searchID(List L,infotypeB barang);
 void MaxMinPriceKategory(List L, infotypeK kategori);
+void Menu();
+void deleteFirstChild(adrKategori &P, adrBarang &Q);
+void deleteKategori(List &L,infotypeK kategori);
+adrKategori searchParentID(List L,infotypeB barang);
+void deleteAfterChild(adrKategori &P, adrBarang Prec, adrBarang &Q);
+void deleteBarang(List &L, infotypeB barang);
+void printBarangOnly(List L);
+int countBarang(List L,infotypeK kategori);
 #endif // KATEGORI_H_INCLUDED
