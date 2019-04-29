@@ -24,7 +24,7 @@ adrKategori allocationKat(infotypeK kategori){
 }
 adrBarang allocationBrg(infotypeB barang){
     adrBarang P = new elmlistBarang;
-    infoB(P).ID = barang.ID;
+    infoB(P).ID = rand() % 1000 + 10;
     infoB(P).nama = barang.nama;
     infoB(P).harga = barang.harga;
     nextB(P) = NULL;
@@ -43,12 +43,23 @@ void insertFirst(List &L, adrKategori P){
 }
 
 void insertLast(List &L, adrKategori P){
-    if(P!= NULL){
+    if(First(L)!= NULL){
         prevK(P) = Last(L);
         nextK(Last(L)) = P;
         Last(L) = P;
     } else{
         insertFirst(L,P);
+    }
+}
+
+void insertAfter(List &L, adrKategori Prec, adrKategori P){
+    if (Prec != Last(L)){
+        nextK(P) = nextK(Prec);
+        prevK(nextK(P)) = P;
+        prevK(P) = Prec;
+        nextK(Prec) = P;
+    } else {
+        insertLast(L,P);
     }
 }
 
@@ -76,6 +87,19 @@ void deleteLast(List &L, adrKategori &P){
     }
 }
 
+void deleteAfter(List &L, adrKategori Prec, adrKategori &P){
+     /*
+    Name: Muhamad Farell Ambiar
+    NIM: 1301184262
+    */
+    P = nextK(Prec);
+    nextK(Prec) = nextK(P);
+    prevK(nextK(P)) = Prec;
+    nextK(P) = NULL;
+    prevK(P) = NULL;
+
+}
+
 void printParent(List L){
     adrKategori P = First(L);
     while (P!=NULL){
@@ -98,6 +122,19 @@ void printAll(List L){
         cout<<endl;
     }
 }
+void printIDOnly(List L){
+    adrKategori P = First(L);
+    adrBarang Q;
+    while(P!= NULL){
+        Q = pointerBrg(P);
+        while(Q!= NULL){
+            cout<<infoB(Q).ID<<" - ";
+            Q = nextB(Q);
+        }
+        P = nextK(P);
+    }
+    cout<<endl;
+}
 
 
 adrKategori searchParent(List L, infotypeK kategori){
@@ -109,26 +146,48 @@ adrKategori searchParent(List L, infotypeK kategori){
             P= nextK(P);
         }
 
-    };
+    }
     return NULL;
 }
 
-void insertBarang(List &L, infotypeK kategori, infotypeB barang){
-    adrKategori P = searchParent(L,kategori);
-    if (P!= NULL){
-        adrBarang R = allocationBrg(barang);
-        if(pointerBrg(P)!=NULL){
-            adrBarang Q = pointerBrg(P);
-            while (nextB(Q)!=NULL){
-                Q = nextB(Q);
-            }
-            nextB(Q)= R;
-            prevB(R)= Q;
-       } else {
-            pointerBrg(P)= R;
-       }
+
+void insertLastChild(adrKategori P, infotypeB barang){
+    adrBarang R = allocationBrg(barang);
+    if(pointerBrg(P)!=NULL){
+        adrBarang Q = pointerBrg(P);
+        while (nextB(Q)!=NULL){
+            Q = nextB(Q);
+        }
+        nextB(Q)= R;
+        prevB(R)= Q;
+    }
+    else{
+        insertFirstChild(P, barang);
     }
 }
+void insertAfterChild(adrKategori P, adrBarang Prec, infotypeB barang){
+    adrBarang R = allocationBrg(barang);
+    if (nextB(Prec) != NULL){
+        nextB(R) = nextB(Prec);
+        prevB(nextB(R)) = R;
+        prevB(R) = Prec;
+        nextB(Prec) = R;
+    } else {
+        insertLastChild(P,barang);
+    }
+}
+void insertFirstChild(adrKategori P, infotypeB barang){
+    adrBarang R = allocationBrg(barang);
+    if(pointerBrg(P) == NULL){
+        pointerBrg(P) = R;
+    }
+    else{
+        nextB(R) = pointerBrg(P);
+        prevB(pointerBrg(P)) = R;
+        pointerBrg(P) = R;
+    }
+}
+
 adrBarang searchChild(adrBarang P,string nama){
    while(P != NULL){
         if(infoB(P).nama== nama){
@@ -137,7 +196,86 @@ adrBarang searchChild(adrBarang P,string nama){
             P= nextB(P);
         }
 
-    };
+    }
     return NULL;
 }
 
+void inputBarang(List &L, infotypeK kategori, infotypeB barang){
+    adrKategori P = searchParent(L,kategori);
+    if(P!= NULL){
+        adrBarang R = searchChild(pointerBrg(P),barang.nama);
+        if (P!= NULL && R == NULL){
+           insertLastChild(P, barang);
+        }
+        else if(R != NULL){
+            cout<<"DUPLICATE ENTRY BARANG"<<endl;
+        }
+    } else{
+        cout<<"KATEGORI TIDAK DITEMUKAN GAIZ"<<endl;
+    }
+}
+
+
+
+void inputKategori(List &L, infotypeK kategori){
+    adrKategori P = searchParent(L,kategori);
+    if(P == NULL){
+        P = allocationKat(kategori);
+        insertLast(L,P);
+    }
+    else{
+        cout<<"DUPLICATE ENTRY KATEGORY"<<endl;
+    }
+}
+
+bool connection(List L, infotypeK kategori, infotypeB barang){
+    adrKategori P = searchParent(L, kategori);
+    if (P!=NULL){
+        adrBarang Q = searchChild(pointerBrg(P), barang.nama);
+        if(P != NULL && Q != NULL){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    return false;
+}
+adrBarang searchID(List L,infotypeB barang){
+    adrKategori P = First(L);
+    adrBarang Q;
+    while(P!= NULL){
+        Q = pointerBrg(P);
+        while(Q!= NULL){
+            if (infoB(Q).ID == barang.ID){
+                return Q;
+            }
+            Q = nextB(Q);
+        }
+        P = nextK(P);
+    }
+    return NULL;
+}
+
+void MaxMinPriceKategory(List L, infotypeK kategori){
+    adrKategori P = searchParent(L,kategori);
+    if(P != NULL){
+        adrBarang Q = pointerBrg(P);
+        int Max = 0;
+        int Min = infoB(Q).harga;
+        while(Q != NULL){
+            if(infoB(Q).harga >= Max){
+                Max = infoB(Q).harga;
+            }
+            if(infoB(Q).harga <= Min ){
+                Min = infoB(Q).harga;
+            }
+            Q = nextB(Q);
+        }
+        cout<<"Harga Tertinggi pada kategori "<<infoK(P)<<" adalah: Rp."<<Max<<endl;
+        cout<<"Harga Terendah pada kategori "<<infoK(P)<<" adalah: Rp."<<Min<<endl;
+    }
+    else{
+        cout<<"kategory tidak ketemu"<<endl;
+    }
+}

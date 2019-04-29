@@ -32,6 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="LayoutMenu.cpp" />
 		<Unit filename="barang.h" />
 		<Unit filename="iSales.cpp" />
 		<Unit filename="kategori.h" />
