@@ -5,10 +5,10 @@
 1556339770 source:e:\tugas c++\tubes-isales\isales\main.cpp
 	"kategori.h"
 
-1556540675 source:e:\coding\github\tubes-isales\isales\isales.cpp
+1556542691 source:e:\coding\github\tubes-isales\isales\isales.cpp
 	"kategori.h"
 
-1556540675 source:e:\coding\github\tubes-isales\isales\main.cpp
+1556546120 source:e:\coding\github\tubes-isales\isales\main.cpp
 	"kategori.h"
 
 1556078573 e:\coding\github\tubes-isales\isales\isales.h
@@ -21,15 +21,21 @@
 1556338343 e:\tugas c++\tubes-isales\isales\barang.h
 	<iostream>
 
-1556540675 e:\coding\github\tubes-isales\isales\kategori.h
+1556550378 e:\coding\github\tubes-isales\isales\kategori.h
 	"barang.h"
 	<stdlib.h>
 	<iostream>
 
-1556381779 e:\coding\github\tubes-isales\isales\barang.h
+1556543124 e:\coding\github\tubes-isales\isales\barang.h
 	<iostream>
 
-1556542269 source:e:\coding\github\tubes-isales\isales\layoutmenu.cpp
+1556550822 source:e:\coding\github\tubes-isales\isales\layoutmenu.cpp
 	"kategori.h"
 	<windows.h>
+
+1556552037 source:e:\coding\github\tubes-isales\isales\barang.cpp
+	"kategori.h"
+
+1556547291 source:e:\coding\github\tubes-isales\isales\kategori.cpp
+	"kategori.h"
 

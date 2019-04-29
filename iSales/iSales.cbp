@@ -33,8 +33,9 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="LayoutMenu.cpp" />
+		<Unit filename="barang.cpp" />
 		<Unit filename="barang.h" />
-		<Unit filename="iSales.cpp" />
+		<Unit filename="kategori.cpp" />
 		<Unit filename="kategori.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>

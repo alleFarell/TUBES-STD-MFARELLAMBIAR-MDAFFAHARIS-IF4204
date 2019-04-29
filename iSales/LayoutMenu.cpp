@@ -12,7 +12,7 @@ void header(){
 
 };
 void Menu(){
-
+    system("color E5");
     List L;
     int X;
     createList(L);
