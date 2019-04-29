@@ -73,9 +73,11 @@ void Menu(){
             }
             case 4 :{
                 header();
-                cout<<"Masukkan Barang yang akan dihapus: ";
-                cin>>barang.ID;
-                deleteBarang(L,barang);
+                printAll(L);
+                infotypeB barang2;
+                cout<<"Masukkan ID. Barang yang akan dihapus: ";
+                cin>>barang2.ID;
+                deleteBarang(L,barang2);
                 system("pause");
                 break;
             }

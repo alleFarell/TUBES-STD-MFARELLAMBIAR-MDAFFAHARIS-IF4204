@@ -219,7 +219,7 @@ void deleteAfterChild(adrKategori &P, adrBarang Prec, adrBarang &Q){
     Name: Muhamad Farell Ambiar
     NIM: 1301184262
     */
-    if (Q!=pointerBrg(P)){
+    if (Prec!=pointerBrg(P)){
         Q = nextB(Prec);
         nextB(Prec) = nextB(Q);
         prevB(nextB(Q)) = Prec;
@@ -367,8 +367,12 @@ void deleteBarang(List &L, infotypeB barang){
     adrKategori P = searchParentID(L,barang);
     if (Q !=NULL){
         adrBarang R;
-        deleteAfterChild(P,prevB(Q),R);
-        delete R;
+        if(Q!=pointerBrg(P)){
+            deleteAfterChild(P,prevB(Q),R);
+            delete R;
+        } else{
+            deleteFirstChild(P,Q);
+        }
     } else{
         cout<<"Barang Tidak Ditemukan"<<endl;
     }
