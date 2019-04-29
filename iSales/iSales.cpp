@@ -102,10 +102,12 @@ void deleteAfter(List &L, adrKategori Prec, adrKategori &P){
 
 void printParent(List L){
     adrKategori P = First(L);
+    cout<<"Kategori Yang ada : ";
     while (P!=NULL){
         cout<<infoK(P)<<" - ";
         P = nextK(P);
     }
+    cout<<endl;
 };
 
 void printAll(List L){
@@ -125,6 +127,7 @@ void printAll(List L){
 void printIDOnly(List L){
     adrKategori P = First(L);
     adrBarang Q;
+    cout<<endl<<"ID YANG TERSEDIA PADA LIST: "<<endl<<endl;
     while(P!= NULL){
         Q = pointerBrg(P);
         while(Q!= NULL){
@@ -135,7 +138,20 @@ void printIDOnly(List L){
     }
     cout<<endl;
 }
-
+void printBarangOnly(List L){
+    adrKategori P = First(L);
+    adrBarang Q;
+    cout<<endl<<"BARANG YANG TERSEDIA PADA LIST: "<<endl<<endl;
+    while(P!= NULL){
+        Q = pointerBrg(P);
+        while(Q!= NULL){
+            cout<<infoB(Q).nama<<" - ";
+            Q = nextB(Q);
+        }
+        P = nextK(P);
+    }
+    cout<<endl;
+}
 
 adrKategori searchParent(List L, infotypeK kategori){
     adrKategori P = First(L);
@@ -187,7 +203,32 @@ void insertFirstChild(adrKategori P, infotypeB barang){
         pointerBrg(P) = R;
     }
 }
+void deleteFirstChild(adrKategori &P, adrBarang &Q){
+    Q = pointerBrg(P);
+    if(Q != NULL && nextB(Q)!= NULL){
+        pointerBrg(P) = nextB(Q);
+        prevB(pointerBrg(P)) = NULL;
+        nextB(Q) = NULL;
+    } else{
+        pointerBrg(P) = NULL;
+    }
 
+}
+void deleteAfterChild(adrKategori &P, adrBarang Prec, adrBarang &Q){
+     /*
+    Name: Muhamad Farell Ambiar
+    NIM: 1301184262
+    */
+    if (Q!=pointerBrg(P)){
+        Q = nextB(Prec);
+        nextB(Prec) = nextB(Q);
+        prevB(nextB(Q)) = Prec;
+        nextB(Q) = NULL;
+        prevB(Q) = NULL;
+    } else{
+        deleteFirstChild(P,Q);
+    }
+}
 adrBarang searchChild(adrBarang P,string nama){
    while(P != NULL){
         if(infoB(P).nama== nama){
@@ -206,12 +247,14 @@ void inputBarang(List &L, infotypeK kategori, infotypeB barang){
         adrBarang R = searchChild(pointerBrg(P),barang.nama);
         if (P!= NULL && R == NULL){
            insertLastChild(P, barang);
+           cout<<endl<<"ENTRY BARANG BERHASIL!"<<endl<<endl;
         }
         else if(R != NULL){
-            cout<<"DUPLICATE ENTRY BARANG"<<endl;
+            cout<<endl<<"DUPLICATE ENTRY BARANG"<<endl<<endl;
         }
     } else{
-        cout<<"KATEGORI TIDAK DITEMUKAN GAIZ"<<endl;
+
+        cout<<endl<<"KATEGORI TIDAK DITEMUKAN GAIZ"<<endl<<endl;
     }
 }
 
@@ -222,9 +265,10 @@ void inputKategori(List &L, infotypeK kategori){
     if(P == NULL){
         P = allocationKat(kategori);
         insertLast(L,P);
+        cout<<endl<<"ENTRY KATEGORI BERHASIL!"<<endl<<endl;
     }
     else{
-        cout<<"DUPLICATE ENTRY KATEGORY"<<endl;
+        cout<<"DUPLICATE ENTRY CATEGORY"<<endl;
     }
 }
 
@@ -256,26 +300,87 @@ adrBarang searchID(List L,infotypeB barang){
     }
     return NULL;
 }
-
+adrKategori searchParentID(List L,infotypeB barang){
+    adrKategori P = First(L);
+    adrBarang Q;
+    while(P!= NULL){
+        Q = pointerBrg(P);
+        while(Q!= NULL){
+            if (infoB(Q).ID == barang.ID){
+                return P;
+            }
+            Q = nextB(Q);
+        }
+        P = nextK(P);
+    }
+    return NULL;
+}
 void MaxMinPriceKategory(List L, infotypeK kategori){
     adrKategori P = searchParent(L,kategori);
     if(P != NULL){
         adrBarang Q = pointerBrg(P);
-        int Max = 0;
-        int Min = infoB(Q).harga;
-        while(Q != NULL){
-            if(infoB(Q).harga >= Max){
-                Max = infoB(Q).harga;
+        if(Q!= NULL){
+            int Max = 0;
+            int Min = infoB(Q).harga;
+            while(Q != NULL){
+                if(infoB(Q).harga >= Max){
+                    Max = infoB(Q).harga;
+                }
+                if(infoB(Q).harga <= Min ){
+                    Min = infoB(Q).harga;
+                }
+                Q = nextB(Q);
             }
-            if(infoB(Q).harga <= Min ){
-                Min = infoB(Q).harga;
-            }
-            Q = nextB(Q);
+            cout<<"Harga Tertinggi pada kategori "<<infoK(P)<<" adalah: Rp."<<Max<<endl;
+            cout<<"Harga Terendah pada kategori "<<infoK(P)<<" adalah: Rp."<<Min<<endl;
+        } else{
+            cout<<endl<<"TIDAK ADA BARANG GAIZ"<<endl<<endl;
         }
-        cout<<"Harga Tertinggi pada kategori "<<infoK(P)<<" adalah: Rp."<<Max<<endl;
-        cout<<"Harga Terendah pada kategori "<<infoK(P)<<" adalah: Rp."<<Min<<endl;
     }
     else{
         cout<<"kategory tidak ketemu"<<endl;
     }
 }
+void deleteKategori(List &L,infotypeK kategori){
+    adrKategori P = searchParent(L,kategori);
+    if (P!=NULL){
+        adrBarang Q = pointerBrg(P);
+        while(Q!=NULL){
+            deleteFirstChild(P,Q);
+            delete Q;
+        }
+        adrKategori R;
+        if(P!=First(L)){
+            deleteAfter(L,prevK(P),R);
+            delete R;
+        } else{
+            deleteFirst(L,R);
+            delete R;
+        }
+        cout<<endl<<"DELETE KATEGORY BERHASIL!"<<endl<<endl;
+    }else{
+        cout<<endl<<"KATEGORY TIDAK DITEMUKAN"<<endl<<endl;
+    }
+}
+void deleteBarang(List &L, infotypeB barang){
+    adrBarang Q = searchID(L,barang);
+    adrKategori P = searchParentID(L,barang);
+    if (Q !=NULL){
+        adrBarang R;
+        deleteAfterChild(P,prevB(Q),R);
+        delete R;
+    } else{
+        cout<<"Barang Tidak Ditemukan"<<endl;
+    }
+}
+int countBarang(List L,infotypeK kategori){
+    adrKategori P = searchParent(L,kategori);
+    int X = 0;
+    adrBarang Q = pointerBrg(P);
+    while(Q!=NULL){
+        X++;
+        Q = nextB(Q);
+    }
+    return X;
+}
+
