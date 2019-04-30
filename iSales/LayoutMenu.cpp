@@ -1,6 +1,7 @@
 #include "kategori.h"
 #include<windows.h>
 void header(){
+    system("color E5");
     system("cls");
     cout<<"===============================  i-Sales  ================================"<<endl;
     cout<<"|                                                                        |"<<endl;
@@ -12,7 +13,6 @@ void header(){
 
 };
 void Menu(){
-    system("color E5");
     List L;
     int X;
     createList(L);

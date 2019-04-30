@@ -166,11 +166,15 @@ void deleteKategori(List &L,infotypeK kategori){
             delete Q;
         }
         adrKategori R;
-        if(P!=First(L)){
+        if(P!=First(L) && P!= Last(L)){
             deleteAfter(L,prevK(P),R);
             delete R;
-        } else{
+        } else if(P == First(L)){
             deleteFirst(L,R);
+            delete R;
+        } else{
+            cout<<"CEK DEL LAST";
+            deleteLast(L,R);
             delete R;
         }
         cout<<endl<<"DELETE KATEGORY BERHASIL!"<<endl<<endl;
